@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to connect to OpenAI." },
       { status: 500 }

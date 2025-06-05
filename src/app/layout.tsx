@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: "An AI Driven Revision Question Website, built with Next.js and Tailwind CSS.",
 };
 
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>

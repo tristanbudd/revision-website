@@ -3,10 +3,8 @@
 import * as React from "react"
 import {
   IconCamera,
-  IconDatabase,
   IconFileAi,
   IconFileDescription,
-  IconFileWord,
   IconHelp,
   IconReport,
   IconBrandGithub,
