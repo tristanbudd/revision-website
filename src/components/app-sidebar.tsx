@@ -9,7 +9,7 @@ import {
   IconReport,
   IconBrandGithub,
   IconLogout,
-  
+  IconDatabase
 } from "@tabler/icons-react"
 
 import { useState } from "react";
@@ -24,7 +24,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { NavQuestions } from "@/components/nav-questions"
+import { NavQuizzes } from "@/components/nav-quizzes"
+import { NavDatasets } from "@/components/nav-datasets"
 import { NavMain } from "@/components/nav-main"
 import { NavSecondary } from "@/components/nav-secondary"
 import {
@@ -39,71 +40,32 @@ import {
 import { Button } from "./ui/button"
 
 const data = {
-  navClouds: [
+  datasets: [
     {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  questions: [
-    {
-      name: "Example Question",
+      name: "Example Dataset",
       url: "#",
       icon: IconReport,
+    }
+  ],
+  quizzes: [
+    {
+      name: "Example Quiz",
+      url: "#",
+      icon: IconDatabase,
     }
   ],
   navSecondary: [
     {
       title: "Report An Issue",
-      url: "#",
+      url: "https://github.com/tristanbudd/revision-website/issues",
       icon: IconHelp,
+      target: "_blank",
     },
     {
       title: "View On GitHub",
-      url: "#",
+      url: "https://github.com/tristanbudd/revision-website",
       icon: IconBrandGithub,
+      target: "_blank",
     },
   ],
 }
@@ -134,7 +96,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain />
-        <NavQuestions items={data.questions} />
+        <NavQuizzes items={data.quizzes} />
+        <NavDatasets items={data.datasets} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { type Icon } from "@tabler/icons-react"
+import { IconExternalLink } from "@tabler/icons-react"
 
 import {
   SidebarGroup,
@@ -19,6 +20,7 @@ export function NavSecondary({
     title: string
     url: string
     icon: Icon
+    target?: "_blank" | "_self"
   }[]
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
@@ -28,9 +30,14 @@ export function NavSecondary({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild>
-                <a href={item.url}>
+                <a
+                  href={item.url}
+                  target={item.target}
+                  className="flex items-center w-full"
+                >
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span className="ml-2">{item.title}</span>
+                  <IconExternalLink className="ml-auto" />
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
