@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { IconClick, IconFileInvoice, IconFileInvoiceFilled } from "@tabler/icons-react";
+import { IconPointer, IconClick, IconFileInvoice, IconFileInvoiceFilled } from "@tabler/icons-react";
 
-const data = {
+const datasets = {
   "example": { name: "Example", description: "This is an example dataset." },
 };
 
@@ -43,7 +43,7 @@ type PromptProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-type QuizType = "multi" | "fill" | "write" | null;
+type QuizType = "single" | "multi" | "fill" | "write" | null;
 
 export function Prompt({ open, onOpenChange }: PromptProps) {
   const [step, setStep] = useState<1 | 2>(1);
@@ -92,6 +92,14 @@ export function Prompt({ open, onOpenChange }: PromptProps) {
               variant="outline"
               size="sm"
               className="w-full justify-start"
+              onClick={() => handleQuizType("single")}
+            >
+              <IconPointer className="mr-2" /> Single-Choice Questions
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full justify-start"
               onClick={() => handleQuizType("multi")}
             >
               <IconClick className="mr-2" /> Multi-Choice Questions
@@ -128,20 +136,20 @@ export function Prompt({ open, onOpenChange }: PromptProps) {
               <Select
                 value={selectedDataset}
                 onValueChange={setSelectedDataset}
-                disabled={Object.keys(data).length === 0}
+                disabled={Object.keys(datasets).length === 0}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Choose a data set..." />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(data).map(([key, value]) => (
+                  {Object.entries(datasets).map(([key, value]) => (
                     <SelectItem key={key} value={key}>
                       {value.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {Object.keys(data).length === 0 && (
+              {Object.keys(datasets).length === 0 && (
                 <div className="mt-2 text-xs text-muted-foreground">
                   No datasets found. Please add one from the sidebar.
                 </div>
@@ -152,7 +160,7 @@ export function Prompt({ open, onOpenChange }: PromptProps) {
               <Input
                 type="number"
                 min={1}
-                max={50}
+                max={25}
                 value={amount}
                 onChange={e => setAmount(Number(e.target.value))}
                 placeholder="Enter amount"

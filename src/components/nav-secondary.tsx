@@ -33,6 +33,7 @@ export function NavSecondary({
                 <a
                   href={item.url}
                   target={item.target}
+                  rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
                   className="flex items-center w-full"
                 >
                   <item.icon />

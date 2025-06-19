@@ -11,9 +11,17 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Prompt } from "@/components/prompt"
+import { NewDataset } from "@/components/new-dataset"
 
-export function NavMain() {
-  const [open, setOpen] = useState(false)
+export function NavMain({
+  setSidebarRefresh,
+  setSelectedDatasetId,
+}: {
+  setSidebarRefresh: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedDatasetId: (id: string) => void;
+}) {
+  const [promptOpen, setPromptOpen] = useState(false)
+  const [newDatasetOpen, setNewDatasetOpen] = useState(false)
 
   return (
     <SidebarGroup>
@@ -23,7 +31,7 @@ export function NavMain() {
             <SidebarMenuButton
               tooltip="Start A New Quiz"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-              onClick={() => setOpen(true)}
+              onClick={() => setPromptOpen(true)}
             >
               <IconCirclePlusFilled />
               <span>Start Quiz</span>
@@ -31,14 +39,20 @@ export function NavMain() {
             <SidebarMenuButton
               tooltip="Add A New Dataset"
               variant="outline"
-              onClick={() => setOpen(true)}
+              onClick={() => setNewDatasetOpen(true)}
             >
               <IconDatabase />
               <span>Add Dataset</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <Prompt open={open} onOpenChange={setOpen} />
+        <Prompt open={promptOpen} onOpenChange={setPromptOpen} />
+        <NewDataset
+          open={newDatasetOpen}
+          onOpenChange={setNewDatasetOpen}
+          onDatasetAdded={() => setSidebarRefresh(r => r + 1)}
+          onDatasetCreated={setSelectedDatasetId}
+        />
       </SidebarGroupContent>
     </SidebarGroup>
   )

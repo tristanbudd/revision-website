@@ -1,10 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { type Icon } from "@tabler/icons-react"
 import {
-  IconCamera,
-  IconFileAi,
-  IconFileDescription,
   IconHelp,
   IconReport,
   IconBrandGithub,
@@ -39,14 +37,15 @@ import {
 } from "@/components/ui/sidebar"
 import { Button } from "./ui/button"
 
-const data = {
-  datasets: [
-    {
-      name: "Example Dataset",
-      url: "#",
-      icon: IconReport,
-    }
-  ],
+const data: {
+  navSecondary: {
+    title: string
+    url: string
+    icon: Icon
+    target?: "_blank" | "_self"
+  }[]
+  quizzes: { name: string; url: string; icon: Icon }[]
+} = {
   quizzes: [
     {
       name: "Example Quiz",
@@ -70,7 +69,22 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  onSelectDataset: (id: string) => void;
+  refresh?: number;
+  setSidebarRefresh: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedDatasetId: (id: string) => void;
+  selectedDatasetId?: string | null;
+};
+
+export function AppSidebar({
+  onSelectDataset,
+  refresh,
+  setSidebarRefresh,
+  setSelectedDatasetId,
+  selectedDatasetId = null,
+  ...props
+}: AppSidebarProps) {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   function handleLogout() {
@@ -95,9 +109,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain />
+        <NavMain
+          setSidebarRefresh={setSidebarRefresh}
+          setSelectedDatasetId={setSelectedDatasetId}
+        />
         <NavQuizzes items={data.quizzes} />
-        <NavDatasets items={data.datasets} />
+        <NavDatasets
+          onSelectDataset={setSelectedDatasetId}
+          refresh={refresh}
+          selectedDatasetId={selectedDatasetId}
+        />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
@@ -132,3 +153,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   )
 }
+
